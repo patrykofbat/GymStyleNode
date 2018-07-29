@@ -1,22 +1,18 @@
-import * as http from "http";
+import express from "express";
+import cors from "cors";
+
+let app = express();
+
+app.use(cors());
 
 
-let json = {
-    patryk: "imie",
-    liczba: 2,
-    heloo: [1, 2, "arrr"]
-}
+app.listen(8081, () => {
+    console.log("Server running on 127.0.0.1");
+})
 
-http.createServer(function (request, response) {
 
-    // Send the HTTP header 
-    // HTTP Status: 200 : OK
-    // Content Type: text/plain
-    response.writeHead(200, { 'Content-Type': 'text/plain' });
-
-    // Send the response body as "Hello World"
-    response.end(JSON.stringify(json));
-}).listen(8081);
-
-// Console will print the message
-console.log('Server running at http://127.0.0.1:8081/');
+app.post("/registration", (req, res, next) => {
+    console.log("i m here");
+    res.json({ msg: "elo" });
+    next();
+});
