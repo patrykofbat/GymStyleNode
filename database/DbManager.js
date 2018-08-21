@@ -13,11 +13,9 @@ export default class DbManager {
         this.conn.connect();
     }
 
-    executeQuery = (sql) => {
-        this.conn.query(sql, (err, rows, fields)=>{
-            console.log(rows[0].title);
-        })
-
+    executeQuery = (sql, dataHandler) => {
+        this.conn.query(sql, dataHandler);
+        
     }
 
 }
