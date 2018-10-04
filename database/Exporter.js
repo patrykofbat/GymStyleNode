@@ -2,7 +2,9 @@ import fs from "fs";
 import DbManager from "../database/DbManager"
 import os from "os";
 import Exercise from "../models/Exercise";
+import dotenv from 'dotenv';
 
+dotenv.config();
 
 
 export default class Exporter {
@@ -13,7 +15,7 @@ export default class Exporter {
 
     fromFile = (file, table, id) =>{
         fs.readFile(file ,"utf8", (err, content)=>{
-            let records = content.split(os.EOL)
+            let records = content.split(os.EOL);
             records.forEach((item)=>{
                 let itemPrim = item.split(",");
                 let exercise = new Exercise(id, itemPrim[0], itemPrim[1]);
