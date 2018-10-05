@@ -2,15 +2,13 @@ import fs from "fs";
 import DbManager from "../database/DbManager"
 import os from "os";
 import Exercise from "../models/Exercise";
-import dotenv from 'dotenv';
 
-dotenv.config();
 
 
 export default class Exporter {
 
-    constructor(host, user, database, password){
-        this.db = new DbManager(host, user, database, password);
+    constructor(credentials){
+        this.db = new DbManager(credentials);
     }
 
     fromFile = (file, table, id) =>{

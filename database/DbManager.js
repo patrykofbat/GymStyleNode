@@ -2,14 +2,8 @@ import mysql from "mysql";
 
 export default class DbManager {
 
-    constructor(host,user,database,password){
-        this.credentials = {
-            host,
-            user,
-            database,
-            password
-        };
-        this.conn = mysql.createConnection(this.credentials);
+    constructor(credentials){
+        this.conn = mysql.createConnection(credentials);
         this.conn.connect();
     }
 
