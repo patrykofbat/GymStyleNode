@@ -9,7 +9,7 @@ let router = express.Router();
 router.get("/:table/:id", (req, res)=>{
     let exporter = new Exporter({
         host: process.env.DB_HOST,
-        username: process.env.DB_USER,
+        user: process.env.DB_USER,
         database: process.env.DB_NAME,
         password: process.env.DB_PASS
     });
