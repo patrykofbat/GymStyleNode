@@ -14,6 +14,7 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 app.use(bodyParser.json());
+app.use(express.static('assets/pdf'));
 
 app.use("/export", ExportRoute);
 app.use("/exercises", ExerciseRoute);

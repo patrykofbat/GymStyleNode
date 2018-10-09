@@ -17,7 +17,7 @@ export default class Exporter {
             records.forEach((item)=>{
                 let itemPrim = item.split(",");
                 let exercise = new Exercise(id, itemPrim[0], itemPrim[1]);
-                //this.db.executeQuery(exercise.parseInsertQuery(table));
+                this.db.executeQuery(exercise.parseInsertQuery(table));
                 id++;
 
             })
