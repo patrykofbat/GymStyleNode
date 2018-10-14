@@ -11,8 +11,6 @@ export default class ExerciseImporter{
         this.db.executeQuery("SELECT * FROM " + table, dataHandler);
     }
 
-    
-
 
 
 
