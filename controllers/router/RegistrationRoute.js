@@ -6,38 +6,46 @@ dotenv.config();
 
 let router = express.Router();
 
+router.post("/", (req, res) => {
+  let userData = req.body;
+  let canCreateAcc = false;
+  let message = "";
 
-router.post('/', (req,res) =>{
-   let userData = req.body;
+  const dbManager = new DbManager({
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    database: process.env.DB_NAME,
+    password: process.env.DB_PASS
+  });
 
-   const dbManager = new DbManager({
-       host: process.env.DB_HOST,
-       user: process.env.DB_USER,
-       database: process.env.DB_NAME,
-       password: process.env.DB_PASS
-   });
+  let user = new User(req.body);
+  console.log(userData);
 
-   let user = new User(req.body);
-
-   dbManager.executeQuery(user.parseIntoSelectByLogin("usersgymstyle"),
-       (err, rows, fields)=>{
-       if(!err){
-           if(rows.length !== 0) {
-               console.log(rows);
-               console.log("user exists");
-           }
-
-       }
-
-
-   });
-
-
-
-   console.log(user.parseIntoSelectByLogin("usersgymstyle"));
-   res.json({
-       message:"Konto zostało utworzone"
-   })
+  dbManager.executeQuery(
+    user.parseIntoSelectByLogin("usersgymstyle"),
+    (err, rows, fields) => {
+      if (!err) {
+        if (rows.length !== 0) {
+          console.log(rows);
+          console.log("user exists");
+          message = "Użytkownik istnieje";
+          console.log(message);
+        } else {
+          dbManager.executeQuery(
+            user.parseIntoInsertQuery("usersgymstyle"),
+            (err, rows, fields) => {
+              if (!err) {
+                message = "Konto zostało utworzone";
+              } else {
+                message = "Konto nie zostało utworzone";
+              }
+            }
+          );
+        }
+      }
+      res.json({ message });
+    }
+  );
 });
 
 export default router;

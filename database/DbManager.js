@@ -1,22 +1,19 @@
 import mysql from "mysql";
 
 export default class DbManager {
+  constructor(credentials) {
+    this.credentials = credentials;
+  }
 
-    constructor(credentials){
-        console.log(credentials);
-        this.conn = mysql.createConnection(credentials);
-        this.conn.connect(function (err) {
-            if(err){
-                throw err;
-            }
-            console.log("Connected");
-
-        });
-    }
-
-    executeQuery = (sql, handler) => {
-        this.conn.query(sql, handler);
-        
-    }
-
+  executeQuery = (sql, handler) => {
+    this.conn = mysql.createConnection(this.credentials);
+    this.conn.connect(function(err) {
+      if (err) {
+        throw err;
+      }
+      console.log("Connected");
+    });
+    this.conn.query(sql, handler);
+    this.conn.end();
+  };
 }
