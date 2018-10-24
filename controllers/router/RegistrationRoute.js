@@ -8,7 +8,6 @@ let router = express.Router();
 
 router.post("/", (req, res) => {
   let userData = req.body;
-  let canCreateAcc = false;
   let message = "";
 
   const dbManager = new DbManager({
@@ -29,21 +28,24 @@ router.post("/", (req, res) => {
           console.log(rows);
           console.log("user exists");
           message = "Użytkownik istnieje";
-          console.log(message);
+          res.json({ message });
         } else {
           dbManager.executeQuery(
             user.parseIntoInsertQuery("usersgymstyle"),
             (err, rows, fields) => {
               if (!err) {
+                console.log("ello");
                 message = "Konto zostało utworzone";
               } else {
                 message = "Konto nie zostało utworzone";
               }
+              res.json({ message });
             }
           );
         }
+      } else {
+        res.json({ message: err });
       }
-      res.json({ message });
     }
   );
 });
