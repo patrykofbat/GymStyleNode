@@ -6,6 +6,8 @@ import ExerciseRoute from "./controllers/router/ExercisesRoute";
 import PDFRoute from "./controllers/router/PDFRoute";
 import RegistrationRoute from "./controllers/router/RegistrationRoute";
 import LoginRoute from "./controllers/router/LoginRoute";
+import errorHandler from "./controllers/middlewares/errorHandler";
+import jwt from "./controllers/middlewares/jwt";
 
 let app = express();
 
@@ -15,6 +17,8 @@ app.use(
     extended: true
   })
 );
+app.use(errorHandler);
+app.use(jwt());
 app.use(bodyParser.json());
 app.use(express.static("assets/pdf"));
 
