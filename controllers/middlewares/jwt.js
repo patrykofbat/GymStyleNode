@@ -6,7 +6,7 @@ dotenv.config();
 const jwt = () => {
   const secret = process.env.SECRET;
   return expressJwt({ secret }).unless({
-    path: ["/login"]
+    path: ["/login", "/registration"]
   });
 };
 
